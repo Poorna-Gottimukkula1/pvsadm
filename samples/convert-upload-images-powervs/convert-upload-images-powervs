@@ -41,7 +41,7 @@ EOF
   exit 0
 }
 
-ARTIFACTS_VERSION="master"
+ARTIFACTS_VERSION="main"
 
 TMP_DIR=$(mktemp -d tmp.XXXXXXXXXXX)
 
