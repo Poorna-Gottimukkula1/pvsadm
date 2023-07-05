@@ -15,7 +15,7 @@ limitations under the License.
 set -e
 #set -x
 
-source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/test/openshift-install-powervs 2> /dev/null | sed  's/test "$@"//g')
+source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/4812182fc0ede1d7e4e4218e7c18c49bbb9f6b1b/openshift-install-powervs 2> /dev/null | sed  's/test "$@"//g')
 
 function help {
   cat <<-EOF
