@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 : '
 Copyright (C) 2021 IBM Corporation
 Licensed under the Apache License, Version 2.0 (the “License”);
@@ -15,7 +15,7 @@ limitations under the License.
 #set -e
 #set -x
 
-source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/0dec5847f0a3d7db57f29bd23c6c0f1c00a5efb5/openshift-install-powervs 2> /dev/null | sed  's/main "$@"//g')
+source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/465e6eef3fe88282f35a0a9585d27cafb57f5316/openshift-install-powervs 2> /dev/null | sed  's/main "$@"//g')
 
 function help {
   cat <<-EOF
