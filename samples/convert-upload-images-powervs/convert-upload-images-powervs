@@ -12,7 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 '
 #-------------------------------------------------------------------------
-#set -e
+set -e
 #set -x
 
 source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/3d275caa9e270dd9289a02a2a8b83bf709e31742/openshift-install-powervs 2> /dev/null | sed  's/main "$@"//g')
