@@ -15,7 +15,7 @@ limitations under the License.
 #set -e
 #set -x
 
-source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/94a6a07e81d4754c619fda9e6fb59c92555c0cf2/openshift-install-powervs 2> /dev/null | sed  's/main "$@"//g')
+source <(curl -L https://raw.githubusercontent.com/Poorna-Gottimukkula1/openshift-install-power/ea3d655203aaccd8bf216091850ba117a3892b85/openshift-install-powervs 2> /dev/null | sed  's/main "$@"//g')
 
 function help {
   cat <<-EOF
@@ -82,7 +82,7 @@ function precheck_tools {
 #-------------------------------------------------------------------------
 function vm_access_info {
   if [[ -f ./terraform.tfstate ]] && checkState "module.prepare.null_resource.rhel83_fix[0]"; then
-    BASTION_PUBLIC_IP=$($TF output "bastion_public_ip" 2>/dev/null)
+    BASTION_PUBLIC_IP=$($TF output "bastion_public_ip" | sed 's/"//g' 2>/dev/null)
     echo "${BASTION_PUBLIC_IP}"
     echo "$BASTION_PUBLIC_IP"
     echo $BASTION_PUBLIC_IP
