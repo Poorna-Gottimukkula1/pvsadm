@@ -738,19 +738,19 @@ function main {
   if ! create_cos_bucket "${COS_BUCKET_NAME}" "${COS_BUCKET_REGION}" "${COS_RESOURCE_GROUP}" ; then exit 1 ; fi
 
   # Downloading rhel locally, else the url may expire by the time the VM comes up
-  if ! [ -z "${RHEL_URL}" ];then
-    SECONDS=0
-    MSG="Downloading rhel qcow2 image completed in"
-    download_image "rhel"
-    time_taken "$MSG"
-  fi
+  # if ! [ -z "${RHEL_URL}" ];then
+  #   SECONDS=0
+  #   MSG="Downloading rhel qcow2 image completed in"
+  #   download_image "rhel"
+  #   time_taken "$MSG"
+  # fi
   create_vm
 
   if !  prepare_remote; then  destroy_vm && exit 1 ; fi
   if !  setup_pvsadm_remote; then  destroy_vm && exit 1 ; fi
   
   if ! [ -z "${RHEL_URL}" ];then
-    if copy_image_to_remote; then
+  #  if copy_image_to_remote; then
       if convert_image_remote "rhel" "${RHEL_IMAGE_NAME}" "${RHEL_URL}" "${SKIP_OS_PASSWORD}"; then
         RHEL_IMAGE_PATH_REMOTE=${IMAGE_PATH}
         if upload_image_remote "${COS_BUCKET_NAME}" "${RHEL_IMAGE_PATH_REMOTE}" "${COS_BUCKET_REGION}"; then
@@ -761,7 +761,7 @@ function main {
           done
         fi
       fi
-    fi
+  #  fi
   fi
   if ! [ -z "${RHCOS_URL}" ];then
     if convert_image_remote "coreos" "${RHCOS_IMAGE_NAME}" "${RHCOS_URL}" "${SKIP_OS_PASSWORD}" ; then
