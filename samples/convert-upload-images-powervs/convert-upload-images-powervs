@@ -666,6 +666,7 @@ function skip_os {
   fi
   cat <<-EOF
 convert_cmd="cd \"$REMOTE_TEMP_DIR\"; pvsadm image qcow2ova --os-password \"$RHEL_ROOT_PASSWORD\" --rhn-user \"$RHEL_SUBSCRIPTION_USERNAME\" --rhn-password \"$RHEL_SUBSCRIPTION_PASSWORD\" --image-dist \"$image_dist\" --image-name \"$image_name\" --image-url \"$image_url\" --image-size \"$IMAGE_SIZE\"  --target-disk-size \"$TARGET_DISK_SIZE\" "
+${convert_cmd}
 EOF
   exit 0
 }
