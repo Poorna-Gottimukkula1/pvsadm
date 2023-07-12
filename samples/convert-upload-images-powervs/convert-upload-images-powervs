@@ -35,6 +35,7 @@ Args:
       --rhcos-url url               Url pointing to the RHCOS qcow2 image(optional)
       --cos-access-key string       Cloud Storage access key(optional)
       --cos-secret-key string       Cloud Storage secret key(optional)
+      --skip-os-password            Skip the root user password (optional)
       --help                        help for upload
 
 EOF
