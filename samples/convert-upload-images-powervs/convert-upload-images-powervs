@@ -660,9 +660,12 @@ function download_image {
 }
 
 function skip_os {
+  convert_cmd="cd \"$REMOTE_TEMP_DIR\"; pvsadm image qcow2ova --os-password \"$RHEL_ROOT_PASSWORD\" --rhn-user \"$RHEL_SUBSCRIPTION_USERNAME\" --rhn-password \"$RHEL_SUBSCRIPTION_PASSWORD\" --image-dist \"$image_dist\" --image-name \"$image_name\" --image-url \"$image_url\" --image-size \"$IMAGE_SIZE\"  --target-disk-size \"$TARGET_DISK_SIZE\" "
+  if [ -n "${SKIP_OS_PASSWORD}" ] ; then
+    convert_cmd+="--skip-os-password "
+  fi
   cat <<-EOF
---skip-os-password is ${SKIP_OS_PASSWORD}
-
+convert_cmd="cd \"$REMOTE_TEMP_DIR\"; pvsadm image qcow2ova --os-password \"$RHEL_ROOT_PASSWORD\" --rhn-user \"$RHEL_SUBSCRIPTION_USERNAME\" --rhn-password \"$RHEL_SUBSCRIPTION_PASSWORD\" --image-dist \"$image_dist\" --image-name \"$image_name\" --image-url \"$image_url\" --image-size \"$IMAGE_SIZE\"  --target-disk-size \"$TARGET_DISK_SIZE\" "
 EOF
   exit 0
 }
@@ -720,7 +723,7 @@ function main {
       skip_os
       ;;     
     "--help")
-      help
+      skip_os
       ;;
     esac
     shift
