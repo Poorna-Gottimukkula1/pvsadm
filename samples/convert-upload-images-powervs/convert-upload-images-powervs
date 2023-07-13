@@ -63,7 +63,7 @@ IMAGE_SIZE="11"
 TARGET_DISK_SIZE="120"
 
 # Default Centos image name
-CENTOS_VM_IMAGE_NAME='centos-8-stream-06122023-tier1'
+CENTOS_VM_IMAGE_NAME='CentOS-Stream-8'
 
 #-------------------------------------------------------------------------
 # Check and run setup
