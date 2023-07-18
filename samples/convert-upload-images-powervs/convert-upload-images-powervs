@@ -623,44 +623,44 @@ function copy_image_file {
   IMAGE_NEW_PATH=./"$TMP_DIR"/$object_name
 }
 
-function download_url() {
-  local url=$1
-  local image_name=${url##*/}
-  rm -rf $image_name
-  retry "curl -fsSL $url -o ./$image_name"
-  if [[ $? -eq 0 ]]; then
-    #IMAGE_PATH=$(realpath ./$image_name)
-    IMAGE_PATH=./$image_name
-    DOWNLOAD_IMAGE_NAME=$image_name
-  else
-    error "Unable to fetch the url"
-  fi
-}
+# function download_url() {
+#   local url=$1
+#   local image_name=${url##*/}
+#   rm -rf $image_name
+#   retry "curl -fsSL $url -o ./$image_name"
+#   if [[ $? -eq 0 ]]; then
+#     #IMAGE_PATH=$(realpath ./$image_name)
+#     IMAGE_PATH=./$image_name
+#     DOWNLOAD_IMAGE_NAME=$image_name
+#   else
+#     error "Unable to fetch the url"
+#   fi
+# }
 
 #-------------------------------------------------------------------------
 # Download the images if needed
 #-------------------------------------------------------------------------
-function download_image {
-  if [[ "$1" == "rhel" ]];then
-    if echo $RHEL_URL | grep -q -i  'access.cdn.redhat.com' ; then
-      log "downloading rhel image"
-      download_url $RHEL_URL
-      RHEL_IMAGE=$IMAGE_PATH
-      RHEL_DOWNLOADED_IMAGE_NAME=$DOWNLOAD_IMAGE_NAME
-      RHEL_NEW_IMAGE_PATH=$IMAGE_NEW_PATH
-      COPY_RHEL_IMAGE=1
-    fi
-  elif [[ "$1" == "rhcos" ]];then
-    download_url $RHCOS_URL
-    RHCOS_IMAGE=IMAGE_PATH
-    RHCOS_DOWNLOAD_IMAGE_NAME=$DOWNLOAD_IMAGE_NAME
-    copy_image_file $RHCOS_IMAGE $RHCOS_OBJECT_NAME
-    RHCOS_NEW_IMAGE_PATH=$IMAGE_NEW_PATH
-    COPY_RHCOS_IMAGE=1
-  else
-    warn "Unknown image"
-  fi
-}
+# function download_image {
+#   if [[ "$1" == "rhel" ]];then
+#     if echo $RHEL_URL | grep -q -i  'access.cdn.redhat.com' ; then
+#       log "downloading rhel image"
+#       download_url $RHEL_URL
+#       RHEL_IMAGE=$IMAGE_PATH
+#       RHEL_DOWNLOADED_IMAGE_NAME=$DOWNLOAD_IMAGE_NAME
+#       RHEL_NEW_IMAGE_PATH=$IMAGE_NEW_PATH
+#       COPY_RHEL_IMAGE=1
+#     fi
+#   elif [[ "$1" == "rhcos" ]];then
+#     download_url $RHCOS_URL
+#     RHCOS_IMAGE=IMAGE_PATH
+#     RHCOS_DOWNLOAD_IMAGE_NAME=$DOWNLOAD_IMAGE_NAME
+#     copy_image_file $RHCOS_IMAGE $RHCOS_OBJECT_NAME
+#     RHCOS_NEW_IMAGE_PATH=$IMAGE_NEW_PATH
+#     COPY_RHCOS_IMAGE=1
+#   else
+#     warn "Unknown image"
+#   fi
+# }
 
 function main {
   mkdir -p ./logs
