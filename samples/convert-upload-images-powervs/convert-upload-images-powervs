@@ -744,6 +744,7 @@ function main {
   #   download_image "rhel"
   #   time_taken "$MSG"
   # fi
+  exit 1
   create_vm
 
   if !  prepare_remote; then  destroy_vm && exit 1 ; fi
