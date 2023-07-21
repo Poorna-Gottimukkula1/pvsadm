@@ -16,7 +16,7 @@ RUN apt-get update -y && apt-get install -y \
     libssl-dev
 
 # Upgrade pip and install Ansible
-RUN RUN python3 -m pip install --upgrade --force-reinstall pip && pip3 install ansible
+RUN python3 -m pip install --upgrade --force-reinstall pip && pip3 install ansible
 
 # Copy the entrypoint script
 COPY entrypoint.sh /entrypoint.sh
