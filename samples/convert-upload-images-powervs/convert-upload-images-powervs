@@ -42,13 +42,13 @@ EOF
   exit 0
 }
 
-ARTIFACTS_VERSION="master"
+ARTIFACTS_VERSION="test"
 
 TMP_DIR=$(mktemp -d tmp.XXXXXXXXXXX)
 
 ARTIFACTS_DIR="automation"
 LOGFILE="$(date "+%Y%m%d%H%M%S")"
-GIT_URL="https://github.com/ocp-power-automation/infra"
+GIT_URL="https://github.com/Poorna-Gottimukkula1/infra"
 
 TRACE=0
 TF_TRACE=0
