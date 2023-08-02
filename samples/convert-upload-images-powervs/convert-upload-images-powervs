@@ -139,7 +139,7 @@ function variables {
   debug_switch
   [ "${IBMCLOUD_API_KEY}" == "" ] && error "Please export IBMCLOUD_API_KEY"
   log "Trying to login with the provided IBMCLOUD_API_KEY..."
-  $CLI_PATH login --apikey "$IBMCLOUD_API_KEY" -q --no-region > /dev/null
+  $CLI_PATH login --apikey "$IBMCLOUD_API_KEY" -q --no-region
   debug_switch
 
   service_instance=$SERVICE_NAME
