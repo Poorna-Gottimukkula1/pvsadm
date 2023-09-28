@@ -28,6 +28,9 @@ set -o pipefail
 
 mv /etc/resolv.conf /etc/resolv.conf.orig || true
 echo "nameserver 9.9.9.9" | tee /etc/resolv.conf
+echo "nameserver 10.0.10.4" >> /etc/resolv.conf
+echo "nameserver 10.0.10.5" >> /etc/resolv.conf
+cat /etc/resolv.conf
 {{if eq .Dist "rhel"}}
 subscription-manager register --force --auto-attach --username={{ .RHNUser }} --password={{ .RHNPassword }}
 {{end}}
@@ -36,7 +39,8 @@ echo {{ .RootPasswd }} | passwd root --stdin
 {{end}}
 yum update -y && yum install -y yum-utils
 yum install -y cloud-init
-yum reinstall grub2-common -y
+#we need to comment this below line when we build image before rhel 9() else it will give conflicts
+yum reinstall grub2-common -y 
 rm -rf /etc/systemd/system/multi-user.target.wants/firewalld.service
 rpm -vih --nodeps https://public.dhe.ibm.com/software/server/POWER/Linux/yum/download/ibm-power-repo-latest.noarch.rpm
 sed -i 's/^more \/opt\/ibm\/lop\/notice/#more \/opt\/ibm\/lop\/notice/g' /opt/ibm/lop/configure
@@ -86,6 +90,8 @@ rpm -e ibm-power-repo-*.noarch
 
 mv /etc/resolv.conf.orig /etc/resolv.conf || true
 touch /.autorelabel
+sed -i '/nameserver 9.9.9.9/d' /etc/resolv.conf
+cat /etc/resolv.conf
 `
 
 var CloudConfig = `# latest file from cloud-init-22.1-1.el8.noarch
