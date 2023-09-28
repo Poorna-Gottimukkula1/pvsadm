@@ -28,6 +28,10 @@ set -o pipefail
 
 mv /etc/resolv.conf /etc/resolv.conf.orig || true
 echo "nameserver 9.9.9.9" | tee /etc/resolv.conf
+#when we need 10* network
+#echo "nameserver 10.0.10.4" >> /etc/resolv.conf
+#echo "nameserver 10.0.10.5" >> /etc/resolv.conf
+cat /etc/resolv.conf
 {{if eq .Dist "rhel"}}
 subscription-manager register --force --auto-attach --username={{ .RHNUser }} --password={{ .RHNPassword }}
 {{end}}
@@ -36,7 +40,8 @@ echo {{ .RootPasswd }} | passwd root --stdin
 {{end}}
 yum update -y && yum install -y yum-utils
 yum install -y cloud-init
-yum reinstall grub2-common -y
+we need to comment this below line when we build image before rhel 9() else it will give conflicts
+#yum reinstall grub2-common -y
 rm -rf /etc/systemd/system/multi-user.target.wants/firewalld.service
 rpm -vih --nodeps https://public.dhe.ibm.com/software/server/POWER/Linux/yum/download/ibm-power-repo-latest.noarch.rpm
 sed -i 's/^more \/opt\/ibm\/lop\/notice/#more \/opt\/ibm\/lop\/notice/g' /opt/ibm/lop/configure
@@ -80,6 +85,17 @@ rpm -e ibm-power-repo-*.noarch
 
 mv /etc/resolv.conf.orig /etc/resolv.conf || true
 touch /.autorelabel
+#when we don't need 9* network
+#sed -i '/nameserver 9.9.9.9/d' /etc/resolv.conf
+cat /etc/resolv.conf
+#ssh fix issue ref doc https://techglimpse.com/disable-weak-key-exchange-algorithm-cbc-ssh/
+sed -i 's/# CRYPTO_POLICY=/CRYPTO_POLICY=/g' /etc/sysconfig/sshd
+cat /etc/sysconfig/sshd
+sed -i '27 i MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com' /etc/ssh/sshd_config
+sed -i '27 i Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr' /etc/ssh/sshd_config
+sed -i '27 i KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256' /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config
+sudo systemctl restart sshd #this command wont as the script will execute with chroot
 `
 
 var CloudConfig = `# latest file from cloud-init-22.1-1.el8.noarch
