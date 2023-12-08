@@ -232,7 +232,9 @@ Qcow2 images location:
 			return err
 		}
 
-		rawImg := filepath.Join(ovaImgDir, ova.VolNameRaw)
+		//rawImg := filepath.Join(ovaImgDir, ova.VolNameRaw)
+		//rawImg := filepath.Join(ovaImgDir, opt.ImageDist+"-"+ova.VolNameRaw)
+		rawImg := filepath.Join(ovaImgDir, fmt.Sprintf("%s-%s", opt.ImageDist, ova.VolNameRaw))
 
 		klog.Infof("Converting Qcow2(%s) image to raw(%s) format", qcow2Img, rawImg)
 		err = qemuImgConvertQcow2Raw(qcow2Img, rawImg)
